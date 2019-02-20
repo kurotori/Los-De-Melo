@@ -55,10 +55,21 @@ public class Acceso {
     public String getServidor() {
         return servidor;
     }
+
+    /**
+     * Permite establecer el URL del servidor de bases de datos
+     * @param servidor URL del servidor donde se aloja la base de datos
+     */
+    public void setServidor(String servidor) {
+        String baseURL = "jdbc:mysql://";
+        this.servidor = baseURL+servidor;
+    }
+    
+    
     
     /**
-     * Crea un objeto de conexión hacia la base de datos
-     * @return un objeto de tipo Connection
+     * Crea un objeto de conexión hacia el servidor
+     * @return un objeto de tipo Connection con los parámetros del servidor
      * @throws Exception en caso de no encontrar el driver apropiado
      */
     public Connection CrearConexion() throws Exception{
@@ -67,7 +78,12 @@ public class Acceso {
         resultado = DriverManager.getConnection(servidor+opcMSQL,usuario,passwd);
         return resultado;
     }
-        
+        /**
+         * Crea un objeto de conexión hacia la base de datos
+         * @param base El nombre de la base de datos
+         * @return
+         * @throws Exception 
+         */
     public Connection CrearConexionABase(String base) throws Exception{
         Connection resultado = null;
         Class.forName("com.mysql.cj.jdbc.Driver");
