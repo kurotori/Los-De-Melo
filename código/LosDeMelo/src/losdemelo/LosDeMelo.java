@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import losdemelo.basedatos.Acceso;
+import losdemelo.basedatos.ChequeoBD;
+import losdemelo.basedatos.Guardar;
 import losdemelo.ventanas.*;
 /**
  *
@@ -26,10 +28,20 @@ public class LosDeMelo {
 
         inicio_1.getContentPane().setBackground(Color.WHITE);
         
-        
+        ChequeoBD chequear = new ChequeoBD();
         Acceso acceso = new Acceso();
-        acceso.chequearConexion();
+        Guardar guardar = new Guardar();
+        System.out.println(acceso.chequearConexion());
         
+        chequear.VerificarBD();
+        
+        
+        String[] lista = {"hola","que","tal"};
+        guardar.recorrerListaCampos(lista);
+        String[] campos = {"nombre","apellido","telefono"};
+        String[] datos = {"Sebaaaaaaaa","Delosa","4654654654"};
+        
+        guardar.guardarDatosEnTabla("systurno","pruebas", campos, datos);
         
     }
     
