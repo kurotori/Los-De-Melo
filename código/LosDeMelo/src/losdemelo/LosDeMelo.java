@@ -11,6 +11,7 @@ import losdemelo.basedatos.Acceso;
 import losdemelo.basedatos.ChequeoBD;
 import losdemelo.basedatos.Guardar;
 import losdemelo.ventanas.*;
+import losdemelo.login.*;
 /**
  *
  * @author Sebastian
@@ -22,26 +23,31 @@ public class LosDeMelo {
      */
     public static void main(String[] args) throws Exception {
         // TODO code application logic here
-        Inicio inicio_1 = new Inicio();
-        inicio_1.setVisible(true);
-        inicio_1.setSize(800, 600);
+//        Inicio inicio_1 = new Inicio();
+//        inicio_1.setVisible(true);
+//        inicio_1.setSize(800, 600);
+//
+//        inicio_1.getContentPane().setBackground(Color.WHITE);
+//        
+//        ChequeoBD chequear = new ChequeoBD();
+//        Acceso acceso = new Acceso();
+//        Guardar guardar = new Guardar();
+//        System.out.println(acceso.chequearConexion());
+//        
+//        chequear.VerificarBD();
+//        
+//        
+//        String[] lista = {"hola","que","tal"};
+//        guardar.recorrerListaCampos(lista);
+//        String[] campos = {"nombre","apellido","telefono"};
+//        String[] datos = {"Sebaaaaaaaa","Delosa","4654654654"};
+//        
+//        guardar.guardarDatosEnTabla("systurno","pruebas", campos, datos);
 
-        inicio_1.getContentPane().setBackground(Color.WHITE);
-        
-        ChequeoBD chequear = new ChequeoBD();
-        Acceso acceso = new Acceso();
-        Guardar guardar = new Guardar();
-        System.out.println(acceso.chequearConexion());
-        
-        chequear.VerificarBD();
-        
-        
-        String[] lista = {"hola","que","tal"};
-        guardar.recorrerListaCampos(lista);
-        String[] campos = {"nombre","apellido","telefono"};
-        String[] datos = {"Sebaaaaaaaa","Delosa","4654654654"};
-        
-        guardar.guardarDatosEnTabla("systurno","pruebas", campos, datos);
+          Hasheo hasheo = new Hasheo();
+          
+          System.out.println(hasheo.hashContrasenia("hola", hasheo.NuevaSal()));
+          
         
     }
     
