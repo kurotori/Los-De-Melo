@@ -9,8 +9,9 @@ import java.sql.*;
 
 
 /**
- *
- * @author Sebastian
+ * Contiene métodos para facilitar la creación y el chequeo de una conexión a la 
+ * base de datos.
+ * @author Sebastian de los Ángeles
  */
 public class Acceso {
     private Connection coneccion = null;
@@ -97,7 +98,7 @@ public class Acceso {
      * Es un método que tiene el propósito de confirmar que se puede establecer
      * una conexión a la base de datos.
      * 
-     * @return Un String con la versión actual del motro de la base de datos.
+     * @return Un String con la versión actual del motor de la base de datos.
      * @throws Exception 
      */
     public String chequearConexion() throws Exception{
@@ -116,9 +117,5 @@ public class Acceso {
         
         return salida;
     }
-    
-    
-    
-    
-    
+
 }

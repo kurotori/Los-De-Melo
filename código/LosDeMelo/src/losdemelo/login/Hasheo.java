@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 /**
- * Métodos de hasheo de contraseña para login seguro.
+ * Métodos de hasheo de la contraseña para login seguro.
  * Este código se basa en documentación y código encontrados en este sitio:
  * https://howtodoinjava.com/security/how-to-generate-secure-password-hash-md5-sha-pbkdf2-bcrypt-examples/
  * @author Sebastian de los Ángeles
@@ -18,8 +18,8 @@ import java.security.SecureRandom;
 public class Hasheo {
     
     /**
-     * Genera una SAL, una secuencia alfanumérica al azar para hashear de forma
-     * segura la contraseña
+     * Genera una SAL, una secuencia al azar para hashear de forma segura 
+     * la contraseña
      * @return Un arreglo de bytes conteniendo la SAL
      * @throws NoSuchAlgorithmException 
      */
@@ -41,10 +41,14 @@ public class Hasheo {
      * Método público para obtener una sal mediante SHA1PRNG
      * @return Un arreglo de bytes conteniendo la SAL
      */
-    public byte[] NuevaSal(){
+    public byte[] nuevaSal(){
         byte[] sal = new byte[16];
         try{
             sal = GenerarSal();
+            for(int i=0;i<sal.length;i++){
+                System.out.print(sal[i]+",");
+            }
+            System.out.println("\n");
         }
         catch(NoSuchAlgorithmException ex){
             System.out.println(ex.getMessage().toString());

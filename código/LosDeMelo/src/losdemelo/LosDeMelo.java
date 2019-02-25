@@ -4,17 +4,24 @@
  * and open the template in the editor.
  */
 package losdemelo;
+import losdemelo.misc.Herramientas;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import losdemelo.basedatos.Acceso;
 import losdemelo.basedatos.ChequeoBD;
 import losdemelo.basedatos.Guardar;
+import losdemelo.basedatos.Leer;
 import losdemelo.ventanas.*;
 import losdemelo.login.*;
 /**
- *
- * @author Sebastian
+ * Clase inicial, contiene las instancias y métodos para iniciar el sistema.
+ * También contiene, de forma temporal, restos de ejecuciones de prueba que deberán 
+ * eliminarse para la versión final.
+ * @author Sebastian de los Ángeles
+ * @version 0.1
  */
 public class LosDeMelo {
 
@@ -39,16 +46,26 @@ public class LosDeMelo {
 //        
 //        String[] lista = {"hola","que","tal"};
 //        guardar.recorrerListaCampos(lista);
-//        String[] campos = {"nombre","apellido","telefono"};
+        String[] campos = {"nombre","apellido","telefono"};
 //        String[] datos = {"Sebaaaaaaaa","Delosa","4654654654"};
 //        
 //        guardar.guardarDatosEnTabla("systurno","pruebas", campos, datos);
 
           Hasheo hasheo = new Hasheo();
+          Herramientas herramientas = new Herramientas();
+          Login login = new Login();
+          Leer leer = new Leer();
           
-          System.out.println(hasheo.hashContrasenia("hola", hasheo.NuevaSal()));
+          ArrayList<ArrayList<String>> resultado = new ArrayList<ArrayList<String>>();
+          resultado = leer.leerDatosDeTabla("systurno", "pruebas", campos, "1");
+          leer.mostrarResultadosSinH(resultado);
           
-        
+          //String pruebalogin = login.registrarUsuario("45751221", "25252525");
+          //System.out.println(pruebalogin);
+          
+          login.loginUsuario("45751221", "25252525");
+          
+          System.out.println(leer.contarDatosDeTabla("systurno", "login", "CI", "CI = 45751221"));
     }
     
 }

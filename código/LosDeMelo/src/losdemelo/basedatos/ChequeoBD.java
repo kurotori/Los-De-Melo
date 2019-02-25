@@ -23,7 +23,10 @@ public class ChequeoBD {
     */
     String sentenciaVerif = "CREATE DATABASE IF NOT EXISTS systurno";
     
-    
+    /**
+     * Permite verificar la 
+     * @throws Exception 
+     */
     public void VerificarBD() throws Exception{
         try{
             Connection conexion = acceso.CrearConexion();

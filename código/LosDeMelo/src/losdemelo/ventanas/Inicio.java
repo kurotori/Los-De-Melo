@@ -6,8 +6,8 @@
 package losdemelo.ventanas;
 
 /**
- *
- * @author luiss
+ * Modelo de ventana para ejemplo
+ * @author Sebastian de los Ángeles
  */
 public class Inicio extends javax.swing.JFrame {
 
