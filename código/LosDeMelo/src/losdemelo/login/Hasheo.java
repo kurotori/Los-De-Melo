@@ -45,10 +45,7 @@ public class Hasheo {
         byte[] sal = new byte[16];
         try{
             sal = GenerarSal();
-            for(int i=0;i<sal.length;i++){
-                System.out.print(sal[i]+",");
-            }
-            System.out.println("\n");
+            
         }
         catch(NoSuchAlgorithmException ex){
             System.out.println(ex.getMessage().toString());
@@ -83,6 +80,7 @@ public class Hasheo {
             generatedPassword = sb.toString();
         }
         catch (NoSuchAlgorithmException e) {
+            System.out.println("error de hash");
             e.printStackTrace();
         }
         return generatedPassword;

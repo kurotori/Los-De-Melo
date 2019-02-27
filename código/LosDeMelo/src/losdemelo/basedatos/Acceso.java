@@ -43,6 +43,8 @@ public class Acceso {
      * Permite obtener las opciones de configuración extras para la conexión al 
      * servidor. Estas opciones se deben concatenar al URL del servidor.
      * 
+     * A ver si esta porqueria aparece.
+     * 
      * @return un String con las opciones de configuración del servidor.
      */
     public String getOpcMSQL() {
@@ -118,4 +120,11 @@ public class Acceso {
         return salida;
     }
 
+    /**
+     *
+     * @param cosa
+     */
+    public void porqueria( String cosa){
+        
+    }
 }

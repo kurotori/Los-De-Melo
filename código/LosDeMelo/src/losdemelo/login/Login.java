@@ -77,7 +77,7 @@ public class Login {
             System.out.println(datosUsuario.get(2).get(1));
             if(datosUsuario.get(2).get(1).equals(hash)){
                 String[] datosSesion = {CI,"activa"};
-                guardar.guardarDatosEnTabla(base, "sesion", camposSesion, datosSesion);
+                //guardar.guardarDatosEnTabla(base, "sesion", camposSesion, datosSesion);
                 resultado="Login exitoso";
             }
             else{

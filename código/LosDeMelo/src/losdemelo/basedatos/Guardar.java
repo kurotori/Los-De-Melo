@@ -50,6 +50,7 @@ public class Guardar {
             conexion.close();
         }
         catch(Exception e){
+            System.out.println("error de conexion");
             respServidor=e.getMessage().toString();
         }
         //System.out.println(respServidor);
