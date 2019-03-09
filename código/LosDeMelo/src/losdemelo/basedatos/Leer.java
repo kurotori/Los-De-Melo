@@ -186,6 +186,15 @@ public class Leer {
         return resultado;
     }
      
+    /**
+     * Permite obtener un dato concreto de una tabla. Es un método pensado para
+     * consultas que deben devolver un solo registro de un solo campo.
+     * @param base La base de datos donde se encuentra la tabla
+     * @param tabla La tabla donde se encuentran los datos
+     * @param campo El campo puntual que se quiere consultar.
+     * @param condicion La condición WHERE de la consulta
+     * @return Un String con el resultado de la consulta
+     */
     public String ver1dato1campo(
                             String base, 
                             String tabla, 
@@ -209,6 +218,32 @@ public class Leer {
         }
         
         return resultado;
+    }
+    
+    /**
+     * @deprecated No Funcional. Se incluyó en otro método para permitir funcionalidad.
+     * @param base
+     * @return 
+     */
+    public int verIdUltimoRegistro(String base){
+        int id = 0;
+        Connection conexion = null;
+        String consulta = "SELECT LAST_INSERT_ID();";
+        try{
+            conexion  = acceso.CrearConexionABase(base);
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                id=rs.getInt(1);
+            }
+
+            conexion.close();
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage().toString());
+        }
+        
+        return id;
     }
     
 }

@@ -5,6 +5,8 @@
  */
 package losdemelo.misc;
 
+import javax.swing.JPasswordField;
+
 /**
  * Contiene métodos de uso general para diferentes necesidades del sistema, incluyendo
  * conversores de tipos, facilitadores de acceso y otros.
@@ -78,5 +80,25 @@ public class Herramientas {
         }
         //System.out.println("---888"+resultado);
         return resultado;
-    }    
+    }
+    
+    /**
+     * Permite obtener un String con la contraseña tal y como se la obtiene del
+     * campo JPasswordField (que entrega la misma en forma de un array de tipo
+     * char) tras lo cual resetea y limpia el campo como medida de seguridad.
+     * @param campoContrasenia
+     * @param contrasenia
+     * @return 
+     */
+    public String leerContrasenia(JPasswordField campoContrasenia){
+        String resultado="";
+        char[] contrasenia = campoContrasenia.getPassword();
+        for(int i=0; i<contrasenia.length;i++){
+            resultado=resultado+contrasenia[i];
+            contrasenia[i]=" ".charAt(0);
+        }
+        campoContrasenia.setText("");
+        return resultado;
+    }
+    
 }

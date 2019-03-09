@@ -26,12 +26,13 @@ import losdemelo.login.*;
 public class LosDeMelo {
 
     /**
-     * @param args the command line arguments
+     * @param args argumentos proporcionados desde la líea de comandos
+     * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception {
         // TODO code application logic here
-        Inicio inicio_1 = new Inicio();
-        inicio_1.setVisible(true);
+        //Inicio inicio_1 = new Inicio();
+        //inicio_1.setVisible(true);
 //        inicio_1.setSize(800, 600);
 //
 //        inicio_1.getContentPane().setBackground(Color.WHITE);
@@ -60,12 +61,16 @@ public class LosDeMelo {
           //resultado = leer.leerDatosDeTabla("systurno", "pruebas", campos, "1");
           //leer.mostrarResultadosSinH(resultado);
           
-          //String pruebalogin = login.registrarUsuario("45751221", "25252525");
+          //String pruebalogin = login.registrarUsuario("45751220","Luis","Delosa","46546546","algo@algo.com", "25252525");
           //System.out.println(pruebalogin);
           
-          login.loginUsuario("45751220", "25252525");
+          //login.loginUsuario("45751221", "25252525");
+          //login.loginUsuario("45751220", "25252525");
           
+          //System.out.println(leer.verIdUltimoRegistro("systurno"));
           //System.out.println(leer.contarDatosDeTabla("systurno", "login", "CI", "CI = 45751221"));
+          
+          login.logoutUsuario("45751220", 13);
     }
     
 }
