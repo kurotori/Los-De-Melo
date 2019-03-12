@@ -24,6 +24,8 @@ import losdemelo.login.*;
  * @version 0.1
  */
 public class LosDeMelo {
+    
+    public int sesion=0;
 
     /**
      * @param args argumentos proporcionados desde la líea de comandos

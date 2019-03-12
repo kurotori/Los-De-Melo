@@ -129,10 +129,10 @@ public class Login {
                 String[] datosInicia = {CI,""+id};
                 //C - Se asocia la ID de sesión con la CI en la tabla Inician.
                 guardar.guardarDatosEnTabla(base, tb_inician, camposInicia, datosInicia);
-                resultado="Login exitoso: "+id;
+                resultado=""+id;
             }
             else{
-                resultado="ERROR: La contraseña es errónea";
+                resultado="La contraseña es errónea";
             } 
         }
         else{

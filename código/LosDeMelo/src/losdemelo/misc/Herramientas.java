@@ -101,4 +101,25 @@ public class Herramientas {
         return resultado;
     }
     
+    public boolean compararContrasenia(char[] contra1, char[] contra2){
+        boolean resultado=false;
+        
+        if(contra1.length != contra2.length){
+            resultado = false;
+        }
+        else{
+            for(int i=0; i<contra1.length;i++){
+                if(contra1[i]!=contra2[i]){
+                    resultado=false;
+                    break;
+                }
+                else{
+                    resultado=true;
+                }
+            }
+        }
+        
+        return resultado;
+    }
+    
 }
