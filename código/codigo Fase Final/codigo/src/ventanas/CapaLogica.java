@@ -30,6 +30,7 @@ import javax.swing.JTextField;
 import losdemelo.login.*;
 import losdemelo.misc.Herramientas;
 
+
 public class CapaLogica {
     losdemelo.login.Login login = new losdemelo.login.Login();
     Herramientas herramientas = new Herramientas();
@@ -41,7 +42,7 @@ public class CapaLogica {
         dlg_error.setVisible(true);
     }
     
-    public void iniciarSesion(Login ventanaLogin, JTextField CI, JPasswordField pf_contrasenia){
+   public void iniciarSesion(Login ventanaLogin, JTextField CI, JPasswordField pf_contrasenia){
         DatosSesion nuevaSesion = ventanaLogin.nuevaSesion;
         String ci = CI.getText();
         String contrasenia = herramientas.leerContrasenia(pf_contrasenia);
@@ -62,6 +63,7 @@ public class CapaLogica {
                 try{
                     resultado=login.loginUsuario(ci, contrasenia);
                     nuevaSesion.setIdSesion(Integer.parseInt(resultado));
+                    nuevaSesion.setCI(ci);
                     MenuNuevo menu = new MenuNuevo(nuevaSesion);
                     menu.setVisible(true);
                 }
@@ -72,7 +74,14 @@ public class CapaLogica {
             }
         }
     }
-    
+   
+   public void cerrarSesion(DatosSesion infoSesion)throws Exception{
+       String CI = infoSesion.getCI();
+       int sesion = infoSesion.getIdSesion();
+       login.logoutUsuario(CI, sesion);
+        
+   }
+   
    public void crearUsuario(Registro vRegistro){
        String CI = vRegistro.getCI();
        String Nombre = vRegistro.getNombre();

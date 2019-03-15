@@ -24,6 +24,7 @@ public final class MenuNuevo extends javax.swing.JFrame {
     
     private MenuNuevo vt_menu;
     static DatosSesion infoSesion;
+    CapaLogica acciones  = new CapaLogica();
 
     public MenuNuevo(DatosSesion datosSesion) {
         
@@ -274,6 +275,11 @@ public final class MenuNuevo extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 204, 204));
         setResizable(false);
         setSize(new java.awt.Dimension(200, 400));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setOpaque(false);
@@ -317,6 +323,16 @@ public final class MenuNuevo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        try{
+        acciones.cerrarSesion(infoSesion);
+        }
+        catch(Exception ex){
+            System.err.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

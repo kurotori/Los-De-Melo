@@ -24,6 +24,17 @@ package ventanas;
 public class DatosSesion {
     
     private int idSesion = 0;
+    private String CI = "";
+
+    public String getCI() {
+        return CI;
+    }
+
+    public void setCI(String CI) {
+        this.CI = CI;
+    }
+    
+    
 
     public int getIdSesion() {
         return idSesion;
