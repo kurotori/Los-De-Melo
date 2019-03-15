@@ -212,6 +212,8 @@ public final class MenuNuevo extends javax.swing.JFrame {
                 AccordionItem item = (AccordionItem) e.getSource();
                 System.out.println("Source name: " + item.getName() + "; Source Title: " + item.getText());
                 
+
+                
                 if(item.getName().equals("submenu1.1")){
                   Reserva reserva = new Reserva();
                   reserva.setVisible(true);
