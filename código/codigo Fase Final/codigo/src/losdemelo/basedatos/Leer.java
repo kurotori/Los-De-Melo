@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 import losdemelo.basedatos.Acceso;
 import losdemelo.misc.Herramientas;
 
@@ -244,6 +246,29 @@ public class Leer {
         }
         
         return id;
+    }
+    
+    public TableModel listaMedicamentosRecetados(
+                                       String base, 
+                                       String CI){
+        TableModel resultado;
+        
+        String consulta = ""+
+        "SELECT"+ 
+         "(SELECT concat_ws(',',medicamentos.Nombre,medicamentos.presentacion)"+
+	"FROM medicamentos WHERE medicamentos.id = contiene.medicamentos_ID)"+
+                 "AS Medicamento,"+
+         "contiene.cantidad"+
+                 "AS Cantidad,"+
+         "(SELECT medicamentos.stock  FROM medicamentos"+
+         "WHERE medicamentos.id = contiene.medicamentos_ID)"+
+                 "AS Disponibilidad"+
+         "FROM contiene INNER JOIN recibe"+
+         "WHERE recibe.Usuarios_CI = ? AND"+
+         "contiene.recetas_ID = recibe.recetas_ID";
+        
+        
+        return resultado;
     }
     
 }
