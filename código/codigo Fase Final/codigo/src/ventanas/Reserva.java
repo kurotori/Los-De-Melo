@@ -6,6 +6,7 @@
 package ventanas;
 
 import java.awt.Font;
+import javax.swing.ImageIcon;
 import javax.swing.plaf.FontUIResource;
 
 /**
@@ -13,16 +14,23 @@ import javax.swing.plaf.FontUIResource;
  * @author Victor Neves
  */
 public class Reserva extends javax.swing.JFrame {
+    CapaLogica acciones = new CapaLogica();
+    DatosSesion infoSesion;
+    MenuNuevo menu;
 
     /**
      * Creates new form Terms
      */
-    public Reserva() {
+    public Reserva(MenuNuevo menu, DatosSesion sesion) {
         initComponents();
         this.setLocationRelativeTo(null);
         
+        this.menu = menu;
+        this.infoSesion = sesion;
+        
         jTable1.setFont(new FontUIResource("SansSerif", Font.PLAIN, 14));
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.setRowHeight(25);
     }
 
     /**
@@ -44,8 +52,8 @@ public class Reserva extends javax.swing.JFrame {
         tfF_numeroTurno = new javax.swing.JFormattedTextField();
         tfF_fechaTurno = new javax.swing.JFormattedTextField();
         jfF_horaTurno = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        bt_solTurno = new javax.swing.JButton();
+        bt_volver = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
@@ -57,33 +65,22 @@ public class Reserva extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(800, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Alplacin", 3, true},
-                {"Amoxidal", 1, false},
+
             },
             new String [] {
-                "Nombre", "Cantidad", "Disponibilidad"
+                ""
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 640, 190));
@@ -129,32 +126,32 @@ public class Reserva extends javax.swing.JFrame {
         jfF_horaTurno.setText("14:30");
         getContentPane().add(jfF_horaTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 120, 80, -1));
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 51));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Solicitar Turno");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        bt_solTurno.setBackground(new java.awt.Color(0, 0, 51));
+        bt_solTurno.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        bt_solTurno.setForeground(new java.awt.Color(255, 255, 255));
+        bt_solTurno.setText("Solicitar Turno");
+        bt_solTurno.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                bt_solTurnoMouseClicked(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 520, -1, -1));
+        getContentPane().add(bt_solTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 520, -1, -1));
 
-        jButton2.setBackground(new java.awt.Color(0, 0, 51));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("<< Volver");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        bt_volver.setBackground(new java.awt.Color(0, 0, 51));
+        bt_volver.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        bt_volver.setForeground(new java.awt.Color(255, 255, 255));
+        bt_volver.setText("<< Volver");
+        bt_volver.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+                bt_volverMouseClicked(evt);
             }
         });
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        bt_volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                bt_volverActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 520, -1, -1));
+        getContentPane().add(bt_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 520, -1, -1));
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
@@ -176,18 +173,18 @@ public class Reserva extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void bt_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_volverActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_bt_volverActionPerformed
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void bt_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_volverMouseClicked
         // TODO add your handling code here:
-        MenuNuevo menu = new MenuNuevo();
-        this.dispose();
         menu.setVisible(true);
-    }//GEN-LAST:event_jButton2MouseClicked
+        this.dispose();
+       
+    }//GEN-LAST:event_bt_volverMouseClicked
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void bt_solTurnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_solTurnoMouseClicked
         // TODO add your handling code here:
         
         String msgTurno="¿Confirma el turno "+tfF_numeroTurno.getText()+
@@ -196,47 +193,24 @@ public class Reserva extends javax.swing.JFrame {
         String listaMed = "- Alplacin,   3   unidad(es)";
         ConfirmaReserva confirma =  new ConfirmaReserva(this, true, msgTurno, listaMed);
         confirma.setVisible(true);
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {                
-                {"Amoxidal", 1, false},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Nombre", "Cantidad", "Disponibilidad"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
+    }//GEN-LAST:event_bt_solTurnoMouseClicked
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        acciones.mostrarMedicamentosRecetados(infoSesion, jTable1);
         
         
         
         
-        
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton bt_solTurno;
+    private javax.swing.JButton bt_volver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

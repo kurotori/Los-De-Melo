@@ -150,7 +150,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_ingresarActionPerformed
 
     private void bt_ingresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_ingresarMouseClicked
-        this.setVisible(false);
+        //this.setVisible(false);
         //MenuNuevo menu = new MenuNuevo();
         //menu.setVisible(true);
         acciones.iniciarSesion(this, tf_ci, pf_contrasenia);

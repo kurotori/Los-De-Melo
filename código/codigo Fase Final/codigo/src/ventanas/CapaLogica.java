@@ -24,15 +24,22 @@ package ventanas;
 import java.awt.Frame;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import losdemelo.basedatos.Leer;
 import losdemelo.login.*;
 import losdemelo.misc.Herramientas;
 
 
 public class CapaLogica {
+    String base = "systurno";
+    
     losdemelo.login.Login login = new losdemelo.login.Login();
+    losdemelo.basedatos.Leer leer = new Leer();
     Herramientas herramientas = new Herramientas();
     
     public void mostrarDialogoError(String msgError, Frame ventanaOrigen){
@@ -62,10 +69,13 @@ public class CapaLogica {
             else{
                 try{
                     resultado=login.loginUsuario(ci, contrasenia);
+                    
+                    
                     nuevaSesion.setIdSesion(Integer.parseInt(resultado));
                     nuevaSesion.setCI(ci);
                     MenuNuevo menu = new MenuNuevo(nuevaSesion);
                     menu.setVisible(true);
+                    ventanaLogin.setVisible(false);
                 }
                 catch(Exception ex){
                     resultado=ex.getMessage();
@@ -113,4 +123,14 @@ public class CapaLogica {
        
        
    }
+   
+   public void mostrarMedicamentosRecetados(DatosSesion infoSesion, JTable tabla){
+       String CI = infoSesion.getCI();
+       DefaultTableModel datos = leer.listaMedicamentosRecetados(base, CI, false);
+       tabla.setModel(datos);
+   }
+   
+   //public void buscarTurnoLibre(JTextField numero, JTextField fecha)
+   
+   
 }

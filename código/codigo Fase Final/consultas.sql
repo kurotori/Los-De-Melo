@@ -47,3 +47,9 @@ WHERE
 recibe.Usuarios_CI = 12345678
 AND
 contiene.recetas_ID = recibe.recetas_ID
+
+/* -  Buscar el primer turno abierto*/
+SELECT `ID` FROM `turnos` WHERE estado = 'abierto' LIMIT 1
+/*Version Final*/
+SELECT `ID`,`fechahora` FROM `turnos` WHERE estado = 'abierto' ORDER BY fechahora ASC LIMIT 1
+

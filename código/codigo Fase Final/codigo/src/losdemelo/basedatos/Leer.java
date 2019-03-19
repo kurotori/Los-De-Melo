@@ -13,8 +13,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
 import losdemelo.basedatos.Acceso;
 import losdemelo.misc.Herramientas;
 
@@ -248,24 +249,86 @@ public class Leer {
         return id;
     }
     
-    public TableModel listaMedicamentosRecetados(
+    public DefaultTableModel listaMedicamentosRecetados(
                                        String base, 
-                                       String CI){
-        TableModel resultado;
+                                       String CI,
+                                       boolean retirados
+                                       ){
+        
+        DefaultTableModel resultado;
+        resultado = new DefaultTableModel();
+        
+        int est_retirado = 0;
+        if(retirados){
+            est_retirado=1;
+        }
+
         
         String consulta = ""+
-        "SELECT"+ 
-         "(SELECT concat_ws(',',medicamentos.Nombre,medicamentos.presentacion)"+
-	"FROM medicamentos WHERE medicamentos.id = contiene.medicamentos_ID)"+
+        "SELECT "+ 
+         "(SELECT concat_ws(',',medicamentos.Nombre,medicamentos.presentacion) "+
+	"FROM medicamentos WHERE medicamentos.id = contiene.medicamentos_ID) "+
                  "AS Medicamento,"+
-         "contiene.cantidad"+
-                 "AS Cantidad,"+
-         "(SELECT medicamentos.stock  FROM medicamentos"+
-         "WHERE medicamentos.id = contiene.medicamentos_ID)"+
-                 "AS Disponibilidad"+
-         "FROM contiene INNER JOIN recibe"+
-         "WHERE recibe.Usuarios_CI = ? AND"+
+         "contiene.cantidad "+
+                 "AS Cantidad, "+
+         "(SELECT medicamentos.stock  FROM medicamentos "+
+         "WHERE medicamentos.id = contiene.medicamentos_ID) "+
+                 "AS Disponibilidad "+
+         "FROM contiene INNER JOIN recibe "+
+         "WHERE recibe.Usuarios_CI = ? AND "+
+         "contiene.entregado = ? AND "+
          "contiene.recetas_ID = recibe.recetas_ID";
+        
+        try{
+            Connection conexion = acceso.CrearConexionABase(base);
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ps.setString(1, CI);
+            ps.setInt(2, est_retirado);
+            ResultSet rs = ps.executeQuery();
+            
+            int numColumnas = rs.getMetaData().getColumnCount();
+            Object[] nomColumnas = new Object[numColumnas];
+            
+            for(int i = 0; i < numColumnas; i++){
+	        	nomColumnas[i] = rs.getMetaData().getColumnLabel(i + 1);
+	        }
+            
+            resultado.setColumnIdentifiers(nomColumnas);
+            
+            
+            while(rs.next()){
+                Object[] fila = new Object[numColumnas];
+                for(int i=0;i<numColumnas-1;i++){
+                    fila[i]=rs.getObject(i+1);
+	        	}
+                int disp = rs.getInt(3)-rs.getInt(2);
+                if(disp < 0){
+                    fila[2]="NO DISPONIBLE";
+                }
+                else{
+                    fila[2]="DISPONIBLE";
+                }
+                
+                resultado.addRow(fila);
+            }
+            conexion.close();
+        }
+        catch(Exception ex){
+            System.err.println(ex.getMessage());
+        }
+        
+        return resultado;
+    }
+    
+    
+    public String[] BuscarTurnoDisponible(){
+        String[] resultado = new String[3];
+        
+        Connection conexion;
+        
+        String Consulta = 
+        
+        
         
         
         return resultado;

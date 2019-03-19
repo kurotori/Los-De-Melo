@@ -215,7 +215,7 @@ public final class MenuNuevo extends javax.swing.JFrame {
 
                 
                 if(item.getName().equals("submenu1.1")){
-                  Reserva reserva = new Reserva();
+                  Reserva reserva = new Reserva(vt_menu,infoSesion);
                   reserva.setVisible(true);
                   vt_menu.setVisible(false);
                 }
