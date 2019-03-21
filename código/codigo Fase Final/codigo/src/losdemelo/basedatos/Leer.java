@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Icon;
@@ -323,14 +324,32 @@ public class Leer {
     
     public String[] BuscarTurnoDisponible(){
         String[] resultado = new String[3];
-        
+        String base = "systurno";
         Connection conexion;
+        String consulta = ""
+                + "SELECT `ID`,`fechahora` "
+                + "FROM `turnos` "
+                + "WHERE estado = 'abierto' "
+                + "ORDER BY fechahora ASC LIMIT 1";
         
-        String Consulta = 
-        
-        
-        
-        
+        try{
+            conexion = acceso.CrearConexionABase(base);
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                resultado[0]=rs.getString(1);
+                resultado[1]=rs.getDate(2).toString();
+                resultado[2]=rs.getTime(2).toString();
+            }
+            System.out.println("T:"+resultado[0]+" D:"+resultado[1]+" H:"+resultado[2]+"");
+            rs.close();
+            conexion.close();
+        }
+        catch(Exception ex){
+            
+        }
+            
         return resultado;
     }
     

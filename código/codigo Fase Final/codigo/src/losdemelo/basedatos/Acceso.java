@@ -20,7 +20,7 @@ public class Acceso {
     private ResultSet resultado = null;
     private String usuario = "losdemelo";
     private String passwd = "zevGfk297yDr5Ebj";
-    private String opcMSQL = "?&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private String opcMSQL = "?&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT-3";
     private String servidor = "jdbc:mysql://localhost";
 
     /**
