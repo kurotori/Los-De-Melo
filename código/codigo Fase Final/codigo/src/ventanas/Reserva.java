@@ -8,6 +8,7 @@ package ventanas;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.plaf.FontUIResource;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -113,17 +114,14 @@ public class Reserva extends javax.swing.JFrame {
 
         tfF_numeroTurno.setEditable(false);
         tfF_numeroTurno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        tfF_numeroTurno.setText("25");
         getContentPane().add(tfF_numeroTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 80, -1));
 
         tfF_fechaTurno.setEditable(false);
         tfF_fechaTurno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        tfF_fechaTurno.setText("25/03/2019");
         getContentPane().add(tfF_fechaTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, 80, -1));
 
         jfF_horaTurno.setEditable(false);
         jfF_horaTurno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
-        jfF_horaTurno.setText("14:30");
         getContentPane().add(jfF_horaTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 120, 80, -1));
 
         bt_solTurno.setBackground(new java.awt.Color(0, 0, 51));
@@ -185,22 +183,23 @@ public class Reserva extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_volverMouseClicked
 
     private void bt_solTurnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_solTurnoMouseClicked
-        // TODO add your handling code here:
+
+        boolean opcion = acciones.seleccionarMedicamentosDisponibles(this,
+                                                    jTable1,
+                                                    tfF_numeroTurno,
+                                                    tfF_fechaTurno,
+                                                    jfF_horaTurno);
+        if(opcion){
+            
+        }
         
-        String msgTurno="¿Confirma el turno "+tfF_numeroTurno.getText()+
-                        " a las "+jfF_horaTurno.getText()+
-                        " del día "+tfF_fechaTurno.getText()+"?";
-        String listaMed = "- Alplacin,   3   unidad(es)";
-        ConfirmaReserva confirma =  new ConfirmaReserva(this, true, msgTurno, listaMed);
-        confirma.setVisible(true);
+
     }//GEN-LAST:event_bt_solTurnoMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         acciones.mostrarMedicamentosRecetados(infoSesion, jTable1);
-        
-        
-        
+        acciones.mostrarTurnosDisponibles(tfF_numeroTurno, tfF_fechaTurno, jfF_horaTurno);
         
     }//GEN-LAST:event_formWindowOpened
 

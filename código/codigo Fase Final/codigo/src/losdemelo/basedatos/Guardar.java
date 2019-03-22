@@ -20,7 +20,7 @@ import losdemelo.misc.Herramientas;
 public class Guardar {
     Acceso acceso = new Acceso();
     Herramientas herramientas = new Herramientas();
-    
+    String base = "systurno";
     
     /**
      * Permite almacenar un conjunto de datos en los campos de una tabla 
@@ -101,6 +101,51 @@ public class Guardar {
             respServidor="Error de conexion: "+e.getMessage().toString();
         }
         System.out.println(respServidor);
+        return resultado;
+    }
+    
+    public String reservarTurno(String numTurno, String CI, String idReceta) throws Exception{
+        String resultado;
+        
+        Connection conexion;
+        
+        String sql_1 = ""
+                + "UPDATE turnos "
+                + "SET turnos.estado = 'confirmado' "
+                + "WHERE turnos.ID = ?";
+        String sql_2 = ""
+                + "INSERT INTO asociado "
+                + "(asociado.turnos_ID, asociado.recetas_ID) "
+                + "VALUES (?,?)";
+        String sql_3 = ""
+                + "INSERT INTO genera "
+                + "(genera.CI_usuario, genera.ID_turno) " 
+                + " VALUES (?,?)";
+        
+        try{
+            conexion = acceso.CrearConexionABase(this.base);
+            PreparedStatement ps = conexion.prepareStatement(sql_1);
+            ps.setString(1, numTurno);
+            ps.executeUpdate();
+            
+            ps = conexion.prepareStatement(sql_2);
+            ps.setString(1, numTurno);
+            ps.setString(2, idReceta);
+            ps.executeUpdate();
+            
+            ps = conexion.prepareStatement(sql_3);
+            ps.setString(1, CI);
+            ps.setString(2, numTurno);
+            ps.executeUpdate();
+            
+            resultado="Consulta registrada para "+CI+" turno:"+numTurno+" receta:"+idReceta;
+            
+        }
+        catch(Exception ex){
+            resultado = ex.getMessage();
+        }
+        
+        System.out.println(resultado);
         return resultado;
     }
     

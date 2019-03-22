@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Icon;
@@ -318,6 +319,7 @@ public class Leer {
             System.err.println(ex.getMessage());
         }
         
+        
         return resultado;
     }
     
@@ -326,6 +328,9 @@ public class Leer {
         String[] resultado = new String[3];
         String base = "systurno";
         Connection conexion;
+        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
         String consulta = ""
                 + "SELECT `ID`,`fechahora` "
                 + "FROM `turnos` "
@@ -339,8 +344,8 @@ public class Leer {
             
             while(rs.next()){
                 resultado[0]=rs.getString(1);
-                resultado[1]=rs.getDate(2).toString();
-                resultado[2]=rs.getTime(2).toString();
+                resultado[1]=rs.getDate(2).toLocalDate().format(formatoFecha);
+                resultado[2]=rs.getTime(2).toLocalTime().format(formatoHora);
             }
             System.out.println("T:"+resultado[0]+" D:"+resultado[1]+" H:"+resultado[2]+"");
             rs.close();
@@ -353,4 +358,34 @@ public class Leer {
         return resultado;
     }
     
+    
+    public String verIdUltimaReceta(String CI){
+        String resultado = "";
+        String base = "systurno";
+        Connection conexion;
+        
+        String consulta = ""
+                + "SELECT recetas.ID, recetas.fecha "
+                + "FROM recetas INNER JOIN recibe " 
+                + "WHERE recibe.Usuarios_CI = ? "
+                + "AND recetas.ID = recibe.recetas_ID "
+                + "ORDER BY recetas.fecha DESC"
+                + "LIMIT 1";
+        try{
+            conexion = acceso.CrearConexionABase(base);
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ps.setString(1, CI);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                resultado = rs.getString(1);
+            }
+        }
+        catch(Exception ex){
+            System.err.println(ex.getMessage());
+        }
+        
+        
+        return resultado;
+    }
 }

@@ -25,11 +25,13 @@ import java.awt.Frame;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import javax.swing.ImageIcon;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import losdemelo.basedatos.Leer;
 import losdemelo.login.*;
 import losdemelo.misc.Herramientas;
@@ -124,13 +126,61 @@ public class CapaLogica {
        
    }
    
+   public void mostrarTurnosDisponibles(JFormattedTextField turno,
+                                        JFormattedTextField dia, 
+                                        JFormattedTextField hora){
+       String[] datosTurno = leer.BuscarTurnoDisponible();
+       turno.setText(datosTurno[0]);
+       dia.setText(datosTurno[1]);
+       hora.setText(datosTurno[2]);
+       
+   }
+   
    public void mostrarMedicamentosRecetados(DatosSesion infoSesion, JTable tabla){
        String CI = infoSesion.getCI();
        DefaultTableModel datos = leer.listaMedicamentosRecetados(base, CI, false);
        tabla.setModel(datos);
    }
    
-   //public void buscarTurnoLibre(JTextField numero, JTextField fecha)
+   public boolean seleccionarMedicamentosDisponibles(Reserva ventana,
+                                                  JTable tablaRecetados,
+                                                  JFormattedTextField turno,
+                                                  JFormattedTextField dia,
+                                                  JFormattedTextField hora){
+       TableModel datos = tablaRecetados.getModel();
+       DefaultTableModel disponibles = new DefaultTableModel();
+       
+       Object[] nomColumnas = {"Medicamento","Cantidad"};
+       disponibles.setColumnIdentifiers(nomColumnas);
+       
+       int filas = datos.getRowCount();
+       
+       for(int i = 0; i<filas;i++){
+           String estado = datos.getValueAt(i, 2).toString();
+           //System.out.println(estado);
+           if(estado.equals("DISPONIBLE")){
+               Object[] fila = new Object[2];
+               fila[0]=datos.getValueAt(i, 0);
+               fila[1]=datos.getValueAt(i, 1);
+               disponibles.addRow(fila);
+               System.out.println(fila[0]+"-"+fila[1]);
+           }
+       }
+       String msgTurno="¿Confirma el turno "+turno.getText()+
+                       " a las "+hora.getText()+
+                       " del día "+dia.getText()+"?";
+       ConfirmaReserva confirma = new ConfirmaReserva(ventana, true, msgTurno, disponibles);
+       confirma.setVisible(true);
+       
+       boolean opcion = false;
+       opcion = confirma.opcion;
+       System.out.println(opcion);
+       return opcion;
+   }
+   
+   public void reservarTurno(){
+       
+   }
    
    
 }

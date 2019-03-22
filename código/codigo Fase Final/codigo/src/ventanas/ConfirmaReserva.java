@@ -16,6 +16,8 @@
  */
 package ventanas;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Sebastian
@@ -23,21 +25,25 @@ package ventanas;
 public class ConfirmaReserva extends javax.swing.JDialog {
     
     boolean opcion=false;
+    static DefaultTableModel datos;
+    static String msgTurno;
 
     /**
      * Creates new form ConfirmaReserva
      */
-    public ConfirmaReserva(java.awt.Frame parent, boolean modal) {
+    
+    public ConfirmaReserva( java.awt.Frame parent, 
+                            boolean modal,
+                            String msgTurno,
+                            DefaultTableModel listaMed) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(null);
-    }
-    public ConfirmaReserva(java.awt.Frame parent, boolean modal,String msgTurno,String listaMed) {
-        super(parent, modal);
-        initComponents();
+        this.datos = listaMed;
+        this.msgTurno = msgTurno;
         this.setLocationRelativeTo(null);
         lbl_confirma.setText(msgTurno);
-        tf_medicamentos.setText(listaMed);
+        tbl_listaMed.setModel(datos);
+//tf_medicamentos.setText(listaMed);
     }
 
     /**
@@ -49,60 +55,67 @@ public class ConfirmaReserva extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        bt_confirma = new javax.swing.JButton();
+        bt_cancela = new javax.swing.JButton();
         lbl_confirma = new javax.swing.JLabel();
-        tf_medicamentos = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_listaMed = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jButton1.setText("Confirmar");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        bt_confirma.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        bt_confirma.setText("Confirmar");
+        bt_confirma.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                bt_confirmaMouseClicked(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 130, 20));
+        getContentPane().add(bt_confirma, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 130, 20));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jButton2.setText("Cancelar");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        bt_cancela.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        bt_cancela.setText("Cancelar");
+        bt_cancela.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+                bt_cancelaMouseClicked(evt);
             }
         });
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        bt_cancela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                bt_cancelaActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 210, 110, 20));
+        getContentPane().add(bt_cancela, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 210, 110, 20));
 
         lbl_confirma.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lbl_confirma.setForeground(new java.awt.Color(255, 255, 255));
         lbl_confirma.setText("Confirma el turno?");
         getContentPane().add(lbl_confirma, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 460, -1));
 
-        tf_medicamentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tf_medicamentos.setText("jTextField1");
-        tf_medicamentos.setAlignmentX(0.0F);
-        tf_medicamentos.setAlignmentY(0.0F);
-        tf_medicamentos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_medicamentosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(tf_medicamentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 410, 90));
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Medicamentos:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, -1));
+
+        tbl_listaMed.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tbl_listaMed);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, 100));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoAzul.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 550, 250));
@@ -110,24 +123,28 @@ public class ConfirmaReserva extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void bt_cancelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_bt_cancelaActionPerformed
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void bt_confirmaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_confirmaMouseClicked
         // TODO add your handling code here:
-        this.dispose();
+        this.setVisible(false);
+        opcion = true;
         
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_bt_confirmaMouseClicked
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void bt_cancelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_cancelaMouseClicked
         // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_jButton2MouseClicked
+        this.setVisible(false);
+        opcion = false;
+    }//GEN-LAST:event_bt_cancelaMouseClicked
 
-    private void tf_medicamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_medicamentosActionPerformed
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-    }//GEN-LAST:event_tf_medicamentosActionPerformed
+        //lbl_confirma.setText(msgTurno);
+        //tbl_listaMed.setModel(datos);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -159,7 +176,8 @@ public class ConfirmaReserva extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ConfirmaReserva dialog = new ConfirmaReserva(new javax.swing.JFrame(), true);
+                ConfirmaReserva dialog = new ConfirmaReserva(new javax.swing.JFrame(), true,msgTurno,datos);
+                
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -173,11 +191,12 @@ public class ConfirmaReserva extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton bt_cancela;
+    private javax.swing.JButton bt_confirma;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_confirma;
-    private javax.swing.JTextField tf_medicamentos;
+    private javax.swing.JTable tbl_listaMed;
     // End of variables declaration//GEN-END:variables
 }
