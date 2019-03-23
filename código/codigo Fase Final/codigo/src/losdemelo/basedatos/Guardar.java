@@ -124,10 +124,8 @@ public class Guardar {
         
         try{
             conexion = acceso.CrearConexionABase(this.base);
-            PreparedStatement ps = conexion.prepareStatement(sql_1);
-            ps.setString(1, numTurno);
-            ps.executeUpdate();
-            
+            PreparedStatement ps;
+                        
             ps = conexion.prepareStatement(sql_2);
             ps.setString(1, numTurno);
             ps.setString(2, idReceta);
@@ -136,6 +134,10 @@ public class Guardar {
             ps = conexion.prepareStatement(sql_3);
             ps.setString(1, CI);
             ps.setString(2, numTurno);
+            ps.executeUpdate();
+            
+            ps = conexion.prepareStatement(sql_1);
+            ps.setString(1, numTurno);
             ps.executeUpdate();
             
             resultado="Consulta registrada para "+CI+" turno:"+numTurno+" receta:"+idReceta;

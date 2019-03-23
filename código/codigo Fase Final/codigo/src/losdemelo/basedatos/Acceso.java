@@ -18,6 +18,7 @@ public class Acceso {
     private Statement sentencia = null;
     private PreparedStatement sentenciaPreparada = null;
     private ResultSet resultado = null;
+    public String base = "systurno";
     private String usuario = "losdemelo";
     private String passwd = "zevGfk297yDr5Ebj";
     private String opcMSQL = "?&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT-3";

@@ -75,6 +75,7 @@ public class Leer {
                     respuesta.get(i).add(rs.getString(i+1));
                 }
             }
+            rs.close();
             conexion.close();
         }
         catch(Exception e){
@@ -108,6 +109,8 @@ public class Leer {
                 System.out.println(linea);
                 linea="";
             }
+            rs.close();
+            
             
         }
         catch(SQLException ex){
@@ -182,6 +185,7 @@ public class Leer {
                 resultado = rs.getInt(1);
             }
             
+            rs.close();
             conexion.close();
         }
         catch(Exception e){
@@ -216,6 +220,7 @@ public class Leer {
                 resultado=rs.getString(0);
             }
             
+            rs.close();
             conexion.close();
         }
         catch(Exception e){
@@ -242,6 +247,7 @@ public class Leer {
                 id=rs.getInt(1);
             }
 
+            rs.close();
             conexion.close();
         }
         catch(Exception e){
@@ -313,6 +319,7 @@ public class Leer {
                 
                 resultado.addRow(fila);
             }
+            rs.close();
             conexion.close();
         }
         catch(Exception ex){
@@ -369,7 +376,7 @@ public class Leer {
                 + "FROM recetas INNER JOIN recibe " 
                 + "WHERE recibe.Usuarios_CI = ? "
                 + "AND recetas.ID = recibe.recetas_ID "
-                + "ORDER BY recetas.fecha DESC"
+                + "ORDER BY recetas.fecha DESC "
                 + "LIMIT 1";
         try{
             conexion = acceso.CrearConexionABase(base);
@@ -380,6 +387,8 @@ public class Leer {
             while(rs.next()){
                 resultado = rs.getString(1);
             }
+            rs.close();
+            conexion.close();
         }
         catch(Exception ex){
             System.err.println(ex.getMessage());
@@ -388,4 +397,118 @@ public class Leer {
         
         return resultado;
     }
+    
+    
+    public DefaultTableModel historialTurnos(
+                                       String base, 
+                                       String CI
+                                       ){
+        
+        DefaultTableModel resultado;
+        resultado = new DefaultTableModel();
+        
+        
+        String consulta = ""+
+                 "SELECT " +
+                 "CONCAT_WS(' - ',DATE(turnos.fechahora),TIME_FORMAT(turnos.fechahora,'%H:%i')) " +
+                 "AS Fecha, " +
+                 "turnos.estado AS 'Estado' " +
+                 "FROM turnos INNER JOIN genera " +
+                 "WHERE genera.CI_usuario = ? " +
+                 "AND turnos.ID = genera.ID_turno";
+        
+        try{
+            Connection conexion = acceso.CrearConexionABase(base);
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            ps.setString(1, CI);
+            ResultSet rs = ps.executeQuery();
+            
+            int numColumnas = rs.getMetaData().getColumnCount();
+            Object[] nomColumnas = new Object[numColumnas];
+            
+            for(int i = 0; i < numColumnas; i++){
+	        	nomColumnas[i] = rs.getMetaData().getColumnLabel(i + 1);
+	        }
+            
+            resultado.setColumnIdentifiers(nomColumnas);
+            
+            while(rs.next()){
+                Object[] fila = new Object[numColumnas];
+                for(int i=0;i<numColumnas;i++){
+                    fila[i]=rs.getObject(i+1);
+	        	}
+                
+                resultado.addRow(fila);
+            }
+            conexion.close();
+        }
+        catch(Exception ex){
+            System.err.println(ex.getMessage());
+        }
+        
+        return resultado;
+    }
+    
+    public String obtenerNombreCompleto(String CI) throws Exception{
+        String resultado = new String();
+        Connection conexion;
+        
+        String sql = ""
+                + "SELECT "
+                + "CONCAT_WS(' ',usuarios.Nombre, usuarios.Apellido) "
+                + "AS NOMBRE "
+                + "FROM usuarios "
+                + "WHERE usuarios.CI = ?";
+        
+        try{
+            conexion = acceso.CrearConexionABase(acceso.base);
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setString(1, CI);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                resultado=rs.getString(1);
+            }
+            rs.close();
+            conexion.close();
+        }
+        catch(Exception ex){
+            System.err.println(ex.getMessage());
+        }
+        
+        return resultado;
+    }
+    
+    public int contarTurnos(String CI) throws Exception{
+        int turnos = 0;
+        Connection conexion;
+        
+        String sql=""
+                + "SELECT "
+                + "COUNT(turnos.ID) "
+                + "FROM turnos INNER JOIN genera "
+                + "WHERE genera.CI_usuario = ? "
+                + "AND turnos.estado = 'confirmado' "
+                + "AND turnos.ID = genera.ID_turno";
+        
+        try{
+            conexion = acceso.CrearConexionABase(acceso.base);
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setString(1, CI);
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                turnos = rs.getInt(1);
+            }
+            
+            rs.close();
+            conexion.close();
+        }
+        catch(Exception ex){
+            System.err.println(ex.getMessage());
+        }
+        
+        return turnos;
+    }
+    
 }

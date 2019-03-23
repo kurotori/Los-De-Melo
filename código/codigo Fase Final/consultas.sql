@@ -119,6 +119,49 @@ INSERT INTO genera
 (genera.CI_usuario, genera.ID_turno)
 VALUES ('12345678',1);
 
+/* Busqueda de última receta */
+
+SELECT recetas.ID, recetas.fecha
+FROM recetas INNER JOIN recibe
+WHERE recibe.Usuarios_CI = '12345678'
+AND recetas.ID = recibe.recetas_ID
+ORDER BY recetas.fecha DESC
+LIMIT 1;
+
+/* Búsqueda de turnos  */
+SELECT 
+CONCAT_WS(' - ',DATE(turnos.fechahora),TIME_FORMAT(turnos.fechahora,'%H:%i'))
+AS Fecha
+FROM turnos INNER JOIN genera
+WHERE genera.CI_usuario = '12345678'
+AND turnos.ID = genera.ID_turno
+
+/* Versión Final */
+SELECT 
+CONCAT_WS(' - ',DATE(turnos.fechahora),TIME_FORMAT(turnos.fechahora,'%H:%i'))
+AS Fecha,
+turnos.estado AS 'Estado'
+FROM turnos INNER JOIN genera
+WHERE genera.CI_usuario = '12345678'
+AND turnos.ID = genera.ID_turno
+
+/* Contar Turnos Activos */
+
+SELECT 
+COUNT(turnos.ID)
+FROM turnos INNER JOIN genera
+WHERE genera.CI_usuario = '12345678'
+AND turnos.estado = 'confirmado'
+AND turnos.ID = genera.ID_turno
+
+
+/* Obtener nombre y apellido */
+
+SELECT 
+CONCAT_WS(' ',usuarios.Nombre, usuarios.Apellido)
+AS NOMBRE
+FROM usuarios
+WHERE usuarios.CI = '12345678'
 
 
 

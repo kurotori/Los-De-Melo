@@ -5,49 +5,27 @@
  */
 package ventanas;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Victor Neves
  */
 public class Historial extends javax.swing.JFrame {
-
+    
+    CapaLogica acciones = new CapaLogica();
+    DatosSesion infoSesion;
+    MenuNuevo menu;
     /**
      * Creates new form Terms
      */
-    public Historial() {
+    public Historial(DatosSesion sesion, MenuNuevo vt_menu) {
         initComponents();
         this.setLocationRelativeTo(null);
-        jTable1.getTableHeader().setReorderingAllowed(false);
+        tbl_listaTurnos.getTableHeader().setReorderingAllowed(false);
         
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"02/02/2019", "Concretada"},
-                {"08/02/2019", "Concretada"},
-                {"15/02/2019", "Cancelada"},
-                {"16/02/2019", "Cancelada"},
-                {"20/02/2019", "Concretada"},
-                {"01/03/2019", "Concretada"},
-                {"25/03/2019", "Confirmada"},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Fecha", "Estado"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        
+        this.infoSesion = sesion;
+        this.menu = vt_menu; 
         
     }
 
@@ -61,13 +39,13 @@ public class Historial extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_listaTurnos = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        tf_nombre = new javax.swing.JTextField();
+        tf_CI = new javax.swing.JTextField();
+        bt_volver = new javax.swing.JButton();
         jLabelFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -75,9 +53,14 @@ public class Historial extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(800, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_listaTurnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -107,7 +90,7 @@ public class Historial extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbl_listaTurnos);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 500, 270));
 
@@ -126,41 +109,39 @@ public class Historial extends javax.swing.JFrame {
         jLabel3.setText("C.I.:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 40, 40));
 
-        jTextField1.setEditable(false);
-        jTextField1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextField1.setText("José Perez");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        tf_nombre.setEditable(false);
+        tf_nombre.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                tf_nombreActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 180, 30));
+        getContentPane().add(tf_nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 180, 30));
 
-        jTextField2.setEditable(false);
-        jTextField2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextField2.setText("1.234.567-8");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        tf_CI.setEditable(false);
+        tf_CI.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tf_CI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                tf_CIActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 100, 30));
+        getContentPane().add(tf_CI, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 100, 30));
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 51));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("<< Volver");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        bt_volver.setBackground(new java.awt.Color(0, 0, 51));
+        bt_volver.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        bt_volver.setForeground(new java.awt.Color(255, 255, 255));
+        bt_volver.setText("<< Volver");
+        bt_volver.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                bt_volverMouseClicked(evt);
             }
         });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bt_volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bt_volverActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 490, -1, -1));
+        getContentPane().add(bt_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 490, -1, -1));
 
         jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/FondoAzul.png"))); // NOI18N
         jLabelFondo.setMaximumSize(new java.awt.Dimension(800, 600));
@@ -171,38 +152,42 @@ public class Historial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bt_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_volverActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_bt_volverActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void tf_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_nombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_tf_nombreActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void tf_CIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_CIActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_tf_CIActionPerformed
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void bt_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_volverMouseClicked
         // TODO add your handling code here:
-        MenuNuevo menu = new MenuNuevo();
         menu.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_bt_volverMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        acciones.verHistorialTurnos(infoSesion, tbl_listaTurnos,tf_nombre,tf_CI);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton bt_volver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tbl_listaTurnos;
+    private javax.swing.JTextField tf_CI;
+    private javax.swing.JTextField tf_nombre;
     // End of variables declaration//GEN-END:variables
 }

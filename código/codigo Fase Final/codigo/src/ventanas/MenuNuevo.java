@@ -210,9 +210,7 @@ public final class MenuNuevo extends javax.swing.JFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 AccordionItem item = (AccordionItem) e.getSource();
-                System.out.println("Source name: " + item.getName() + "; Source Title: " + item.getText());
-                
-
+                //System.out.println("Source name: " + item.getName() + "; Source Title: " + item.getText());
                 
                 if(item.getName().equals("submenu1.1")){
                   Reserva reserva = new Reserva(vt_menu,infoSesion);
@@ -233,7 +231,7 @@ public final class MenuNuevo extends javax.swing.JFrame {
                 }
                 
                 if(item.getName().equals("submenu3.1")){
-                  Historial historial =  new Historial();
+                  Historial historial =  new Historial(infoSesion,vt_menu);
                   historial.setVisible(true);
                   vt_menu.setVisible(false);
                 }

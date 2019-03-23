@@ -16,6 +16,8 @@
  */
 package ventanas;
 
+import losdemelo.basedatos.Leer;
+
 /**
  * El propósito de esta clase es contener los datos de la sesión durante la ejecución
  * del programa.
@@ -25,6 +27,7 @@ public class DatosSesion {
     
     private int idSesion = 0;
     private String CI = "";
+    private String nombreUsuario = "";
 
     public String getCI() {
         return CI;
@@ -44,6 +47,15 @@ public class DatosSesion {
         this.idSesion = idSesion;
         System.out.println("Nueva Sesión: "+idSesion);
     }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+    
     
     
     

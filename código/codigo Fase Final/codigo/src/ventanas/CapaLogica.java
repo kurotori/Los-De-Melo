@@ -25,6 +25,7 @@ import java.awt.Frame;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -32,6 +33,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import losdemelo.basedatos.Guardar;
 import losdemelo.basedatos.Leer;
 import losdemelo.login.*;
 import losdemelo.misc.Herramientas;
@@ -42,6 +44,7 @@ public class CapaLogica {
     
     losdemelo.login.Login login = new losdemelo.login.Login();
     losdemelo.basedatos.Leer leer = new Leer();
+    losdemelo.basedatos.Guardar guardar = new Guardar();
     Herramientas herramientas = new Herramientas();
     
     public void mostrarDialogoError(String msgError, Frame ventanaOrigen){
@@ -72,7 +75,7 @@ public class CapaLogica {
                 try{
                     resultado=login.loginUsuario(ci, contrasenia);
                     
-                    
+                    nuevaSesion.setNombreUsuario(leer.obtenerNombreCompleto(ci));
                     nuevaSesion.setIdSesion(Integer.parseInt(resultado));
                     nuevaSesion.setCI(ci);
                     MenuNuevo menu = new MenuNuevo(nuevaSesion);
@@ -175,11 +178,51 @@ public class CapaLogica {
        boolean opcion = false;
        opcion = confirma.opcion;
        System.out.println(opcion);
+       confirma.dispose();
        return opcion;
    }
    
-   public void reservarTurno(){
+   public void buscarTurnosConfirmados(DatosSesion sesion, 
+                                       JButton bt_reservar)
+                                       
+   {   
+       int turnos = 0;
+       try{
+       turnos = leer.contarTurnos(sesion.getCI());
+       }
+       catch(Exception ex){
+           System.err.println(ex.getMessage());
+       }
+       if(turnos > 0){
+           bt_reservar.setEnabled(false);
+           bt_reservar.setToolTipText(""
+                   + "Ya hay un turno a su nombre en el sistema.\n"
+                   + "Debe usarlo o cancelarlo para volver a reservar.");
+       }
        
+   }
+   
+   public void reservarTurno(DatosSesion sesion){
+       String CI = sesion.getCI();
+       String iDReceta = leer.verIdUltimaReceta(CI);
+       String numTurno = leer.BuscarTurnoDisponible()[0];
+       try{
+            guardar.reservarTurno(numTurno, CI, iDReceta);
+       }
+       catch(Exception ex){
+           System.err.println("Error en reserva de turnos: "+ex.getMessage());
+       }
+   }
+   
+   public void verHistorialTurnos(DatosSesion infoSesion, 
+                                  JTable tabla, 
+                                  JTextField tf_nombre,
+                                  JTextField tf_CI){
+       String CI = infoSesion.getCI();
+       tf_CI.setText(CI);
+       tf_nombre.setText(infoSesion.getNombreUsuario());
+       DefaultTableModel datos = leer.historialTurnos(base, CI);
+       tabla.setModel(datos);
    }
    
    

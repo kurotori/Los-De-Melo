@@ -7,6 +7,7 @@ package ventanas;
 
 import java.awt.Font;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableModel;
 
@@ -32,6 +33,8 @@ public class Reserva extends javax.swing.JFrame {
         jTable1.setFont(new FontUIResource("SansSerif", Font.PLAIN, 14));
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.setRowHeight(25);
+        UIManager.put("ToolTip.font",
+           new FontUIResource("SansSerif", Font.BOLD, 18));
     }
 
     /**
@@ -133,6 +136,11 @@ public class Reserva extends javax.swing.JFrame {
                 bt_solTurnoMouseClicked(evt);
             }
         });
+        bt_solTurno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_solTurnoActionPerformed(evt);
+            }
+        });
         getContentPane().add(bt_solTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 520, -1, -1));
 
         bt_volver.setBackground(new java.awt.Color(0, 0, 51));
@@ -184,14 +192,7 @@ public class Reserva extends javax.swing.JFrame {
 
     private void bt_solTurnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_solTurnoMouseClicked
 
-        boolean opcion = acciones.seleccionarMedicamentosDisponibles(this,
-                                                    jTable1,
-                                                    tfF_numeroTurno,
-                                                    tfF_fechaTurno,
-                                                    jfF_horaTurno);
-        if(opcion){
-            
-        }
+        
         
 
     }//GEN-LAST:event_bt_solTurnoMouseClicked
@@ -200,8 +201,21 @@ public class Reserva extends javax.swing.JFrame {
         // TODO add your handling code here:
         acciones.mostrarMedicamentosRecetados(infoSesion, jTable1);
         acciones.mostrarTurnosDisponibles(tfF_numeroTurno, tfF_fechaTurno, jfF_horaTurno);
+        acciones.buscarTurnosConfirmados(infoSesion, bt_solTurno);
         
     }//GEN-LAST:event_formWindowOpened
+
+    private void bt_solTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_solTurnoActionPerformed
+        // TODO add your handling code here:
+        boolean opcion = acciones.seleccionarMedicamentosDisponibles(this,
+                                                    jTable1,
+                                                    tfF_numeroTurno,
+                                                    tfF_fechaTurno,
+                                                    jfF_horaTurno);
+        if(opcion){
+            acciones.reservarTurno(infoSesion);
+        }
+    }//GEN-LAST:event_bt_solTurnoActionPerformed
 
     /**
      * @param args the command line arguments
