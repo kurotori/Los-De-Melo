@@ -219,7 +219,7 @@ public final class MenuNuevo extends javax.swing.JFrame {
                 }
                 
                 if(item.getName().equals("submenu1.2")){
-                  Cancelar cancelar = new Cancelar();
+                  Cancelar cancelar = new Cancelar(vt_menu,infoSesion);
                   cancelar.setVisible(true);
                   vt_menu.setVisible(false);
                 }

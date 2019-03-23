@@ -154,6 +154,17 @@ WHERE genera.CI_usuario = '12345678'
 AND turnos.estado = 'confirmado'
 AND turnos.ID = genera.ID_turno
 
+/* Datos del turno activo */
+
+SELECT 
+turnos.ID,
+DATE(turnos.fechahora),
+TIME_FORMAT(turnos.fechahora,'%H:%i')
+FROM turnos INNER JOIN genera
+WHERE genera.CI_usuario = '12345678'
+AND turnos.estado = 'confirmado'
+AND turnos.ID = genera.ID_turno
+
 
 /* Obtener nombre y apellido */
 

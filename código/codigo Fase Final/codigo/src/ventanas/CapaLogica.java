@@ -225,5 +225,15 @@ public class CapaLogica {
        tabla.setModel(datos);
    }
    
-   
+   public void verDatosTurnoActual(DatosSesion sesion,
+                                   JFormattedTextField numTurno,
+                                   JFormattedTextField fechaTurno,
+                                   JFormattedTextField horaTurno,
+                                   String[] datosTurno){
+       
+       datosTurno = leer.datosTurnoConfirmado(sesion.getCI());
+       numTurno.setText(datosTurno[0]);
+       fechaTurno.setText(datosTurno[1]);
+       horaTurno.setText(datosTurno[2]);
+   }
 }

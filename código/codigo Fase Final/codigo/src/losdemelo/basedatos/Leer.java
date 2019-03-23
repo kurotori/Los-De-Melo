@@ -511,4 +511,40 @@ public class Leer {
         return turnos;
     }
     
+    public String[] datosTurnoConfirmado(String CI){
+        String[] resultado = new String[3];
+        Connection conexion;
+        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
+        String sql=""+
+                "SELECT " +
+                "turnos.ID, " +
+                "DATE(turnos.fechahora), " +
+                "TIME_FORMAT(turnos.fechahora,'%H:%i') " +
+                "FROM turnos INNER JOIN genera " +
+                "WHERE genera.CI_usuario = ? " +
+                "AND turnos.estado = 'confirmado' " +
+                "AND turnos.ID = genera.ID_turno";
+        
+        try{
+            conexion = acceso.CrearConexionABase(acceso.base);
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setString(1, CI);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                resultado[0]=rs.getString(1);
+                resultado[1]=rs.getDate(2).toLocalDate().format(formatoFecha);
+                resultado[2]=rs.getString(3);
+            }
+            rs.close();
+            conexion.close();
+        }
+        catch(Exception ex){
+            System.err.println(ex.getMessage());
+        }
+        
+        return resultado;
+    }
+    
 }

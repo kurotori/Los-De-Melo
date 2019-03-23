@@ -5,52 +5,27 @@
  */
 package ventanas;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Victor Neves
  */
 public class Cancelar extends javax.swing.JFrame {
+    CapaLogica acciones = new CapaLogica();
+    MenuNuevo vt_menu;
+    DatosSesion infoSesion;
+    String[] datosTurno;
 
     /**
      * Creates new form Terms
      */
-    public Cancelar() {
+    public Cancelar(MenuNuevo menu, DatosSesion sesion) {
         initComponents();
         this.setLocationRelativeTo(null);
+        vt_menu = menu;
+        infoSesion = sesion;
         
-        
-        
-        
-        jTable1.setModel(
-                new javax.swing.table.DefaultTableModel(
-            new Object [][] {                
-                {"Alplacin", 3, true},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Nombre", "Cantidad", "Disponibilidad"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        }
-        
-        );
     }
 
     /**
@@ -63,17 +38,17 @@ public class Cancelar extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_medicamentos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        ftf_numTurno = new javax.swing.JFormattedTextField();
+        ftf_fecha = new javax.swing.JFormattedTextField();
+        ftf_hora = new javax.swing.JFormattedTextField();
+        bt_cancelarTurno = new javax.swing.JButton();
+        bt_volver = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabelFondo = new javax.swing.JLabel();
@@ -83,10 +58,15 @@ public class Cancelar extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(800, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_medicamentos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tbl_medicamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -113,9 +93,9 @@ public class Cancelar extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setAutoscrolls(false);
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane1.setViewportView(jTable1);
+        tbl_medicamentos.setAutoscrolls(false);
+        tbl_medicamentos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane1.setViewportView(tbl_medicamentos);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 530, 110));
 
@@ -144,57 +124,57 @@ public class Cancelar extends javax.swing.JFrame {
         jLabel6.setText("Medicamentos");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, 110, 40));
 
-        jFormattedTextField1.setEditable(false);
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        jFormattedTextField1.setText("25");
-        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+        ftf_numTurno.setEditable(false);
+        ftf_numTurno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        ftf_numTurno.setText("25");
+        ftf_numTurno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextField1ActionPerformed(evt);
+                ftf_numTurnoActionPerformed(evt);
             }
         });
-        getContentPane().add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 80, -1));
+        getContentPane().add(ftf_numTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 80, -1));
 
-        jFormattedTextField2.setEditable(false);
-        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        jFormattedTextField2.setText("25/03/2019");
-        getContentPane().add(jFormattedTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 80, -1));
+        ftf_fecha.setEditable(false);
+        ftf_fecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+        ftf_fecha.setText("25/03/2019");
+        getContentPane().add(ftf_fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 80, -1));
 
-        jFormattedTextField3.setEditable(false);
-        jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
-        jFormattedTextField3.setText("14:30");
-        getContentPane().add(jFormattedTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, 80, -1));
+        ftf_hora.setEditable(false);
+        ftf_hora.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
+        ftf_hora.setText("14:30");
+        getContentPane().add(ftf_hora, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, 80, -1));
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 51));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Cancelar Turno");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        bt_cancelarTurno.setBackground(new java.awt.Color(0, 0, 51));
+        bt_cancelarTurno.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        bt_cancelarTurno.setForeground(new java.awt.Color(255, 255, 255));
+        bt_cancelarTurno.setText("Cancelar Turno");
+        bt_cancelarTurno.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                bt_cancelarTurnoMouseClicked(evt);
             }
         });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bt_cancelarTurno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bt_cancelarTurnoActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 460, -1, -1));
+        getContentPane().add(bt_cancelarTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 460, -1, -1));
 
-        jButton2.setBackground(new java.awt.Color(0, 0, 51));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("<< Volver");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        bt_volver.setBackground(new java.awt.Color(0, 0, 51));
+        bt_volver.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        bt_volver.setForeground(new java.awt.Color(255, 255, 255));
+        bt_volver.setText("<< Volver");
+        bt_volver.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+                bt_volverMouseClicked(evt);
             }
         });
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        bt_volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                bt_volverActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 460, -1, -1));
+        getContentPane().add(bt_volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 460, -1, -1));
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
@@ -211,19 +191,19 @@ public class Cancelar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bt_cancelarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelarTurnoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_bt_cancelarTurnoActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void bt_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_volverActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_bt_volverActionPerformed
 
-    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
+    private void ftf_numTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftf_numTurnoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
+    }//GEN-LAST:event_ftf_numTurnoActionPerformed
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void bt_cancelarTurnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_cancelarTurnoMouseClicked
         // TODO add your handling code here:
         DialogoOkCancel dlg = new DialogoOkCancel(this, true);
         dlg.setVisible(true);
@@ -232,25 +212,30 @@ public class Cancelar extends javax.swing.JFrame {
             menu.setVisible(true);
             this.dispose();
         }
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_bt_cancelarTurnoMouseClicked
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void bt_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_volverMouseClicked
         // TODO add your handling code here:o
-        MenuNuevo menu = new MenuNuevo();
-        menu.setVisible(true);
+        vt_menu.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton2MouseClicked
+    }//GEN-LAST:event_bt_volverMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        acciones.mostrarMedicamentosRecetados(infoSesion, tbl_medicamentos);
+        acciones.verDatosTurnoActual(infoSesion, ftf_numTurno, ftf_fecha, ftf_hora, datosTurno);
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
+    private javax.swing.JButton bt_cancelarTurno;
+    private javax.swing.JButton bt_volver;
+    private javax.swing.JFormattedTextField ftf_fecha;
+    private javax.swing.JFormattedTextField ftf_hora;
+    private javax.swing.JFormattedTextField ftf_numTurno;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -259,7 +244,7 @@ public class Cancelar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTable tbl_medicamentos;
     // End of variables declaration//GEN-END:variables
 }
