@@ -119,4 +119,45 @@ public class Modificar {
         return resultado;
     }
     
+    public String cancelarTurno(String numTurno, String idReceta) throws Exception{
+        String resultado;
+        
+        Connection conexion;
+        
+        String sql_1 = ""
+                + "UPDATE turnos "
+                + "SET turnos.estado = 'cancelado' "
+                + "WHERE turnos.ID = ?";
+        
+        String sql_2 = ""
+                + "DELETE FROM asociado "
+                + "WHERE asociado.turnos_ID = ? AND "
+                + "asociado.recetas_ID = ?";
+        
+        try{
+            conexion = acceso.CrearConexionABase(acceso.base);
+            PreparedStatement ps;
+                        
+            ps = conexion.prepareStatement(sql_2);
+            ps.setString(1, numTurno);
+            ps.setString(2, idReceta);
+            ps.executeUpdate();
+            System.out.println("Delete from asociado");
+            
+            ps = conexion.prepareStatement(sql_1);
+            ps.setString(1, numTurno);
+            ps.executeUpdate();
+            System.out.println("Update turnos");
+            
+            resultado="Se ha cancelado el turno:"+numTurno+" de receta:"+idReceta;
+            
+        }
+        catch(Exception ex){
+            resultado = "Error de cancelación: "+ex.getMessage();
+        }
+        
+        System.out.println(resultado);
+        return resultado;
+    }
+    
 }

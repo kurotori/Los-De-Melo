@@ -130,21 +130,24 @@ public class Guardar {
             ps.setString(1, numTurno);
             ps.setString(2, idReceta);
             ps.executeUpdate();
+            System.out.println("Insert into asociado");
             
             ps = conexion.prepareStatement(sql_3);
             ps.setString(1, CI);
             ps.setString(2, numTurno);
             ps.executeUpdate();
+            System.out.println("Insert into genera");
             
             ps = conexion.prepareStatement(sql_1);
             ps.setString(1, numTurno);
             ps.executeUpdate();
+            System.out.println("Update turnos");
             
             resultado="Consulta registrada para "+CI+" turno:"+numTurno+" receta:"+idReceta;
             
         }
         catch(Exception ex){
-            resultado = ex.getMessage();
+            resultado = "Error de reserva: "+ex.getMessage();
         }
         
         System.out.println(resultado);

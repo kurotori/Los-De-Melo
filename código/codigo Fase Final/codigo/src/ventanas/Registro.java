@@ -234,9 +234,6 @@ public class Registro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfF_ciActionPerformed
 
-    private void bt_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_confirmarActionPerformed
-    }//GEN-LAST:event_bt_confirmarActionPerformed
-
     private void bt_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_volverActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bt_volverActionPerformed
@@ -252,10 +249,13 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_volverMouseClicked
 
     private void bt_confirmarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_confirmarMouseClicked
-        Login log = new Login();
-        log.setVisible(true);
-        this.dispose();
+        
     }//GEN-LAST:event_bt_confirmarMouseClicked
+
+    private void bt_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_confirmarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_bt_confirmarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_confirmar;

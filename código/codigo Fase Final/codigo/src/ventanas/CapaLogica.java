@@ -35,6 +35,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import losdemelo.basedatos.Guardar;
 import losdemelo.basedatos.Leer;
+import losdemelo.basedatos.Modificar;
 import losdemelo.login.*;
 import losdemelo.misc.Herramientas;
 
@@ -45,6 +46,7 @@ public class CapaLogica {
     losdemelo.login.Login login = new losdemelo.login.Login();
     losdemelo.basedatos.Leer leer = new Leer();
     losdemelo.basedatos.Guardar guardar = new Guardar();
+    losdemelo.basedatos.Modificar modificar = new Modificar();
     Herramientas herramientas = new Herramientas();
     
     public void mostrarDialogoError(String msgError, Frame ventanaOrigen){
@@ -202,6 +204,24 @@ public class CapaLogica {
        
    }
    
+   public void buscarTurnosCancelables(DatosSesion sesion, 
+                                       JButton bt_reservar)
+                                       
+   {   
+       int turnos = 0;
+       try{
+       turnos = leer.contarTurnos(sesion.getCI());
+       }
+       catch(Exception ex){
+           System.err.println(ex.getMessage());
+       }
+       if(turnos < 1){
+           bt_reservar.setEnabled(false);
+           bt_reservar.setToolTipText("No hay turnos a su nombre en el sistema");
+       }
+       
+   }
+   
    public void reservarTurno(DatosSesion sesion){
        String CI = sesion.getCI();
        String iDReceta = leer.verIdUltimaReceta(CI);
@@ -236,4 +256,25 @@ public class CapaLogica {
        fechaTurno.setText(datosTurno[1]);
        horaTurno.setText(datosTurno[2]);
    }
+   
+   public void cancelarTurno(DatosSesion sesion){
+       String CI = sesion.getCI();
+       String iDReceta = leer.verIdUltimaReceta(CI);
+       System.out.println("Receta:"+iDReceta);
+       String[] datosTurno = leer.datosTurnoConfirmado(CI);
+       System.out.println("Turno:"+datosTurno[0]);
+       try{
+           modificar.cancelarTurno(datosTurno[0],iDReceta);
+       }
+       catch(Exception ex){
+           System.err.println("Error en cancelación de turnos: "+ex.getMessage());
+       }
+       
+       
+       
+   }
+   
+   public void registrarUsuario(Registro vt_registro){
+           if(herramientas.compararContrasenia(contra1, contra2)
+       }
 }

@@ -126,7 +126,6 @@ public class Cancelar extends javax.swing.JFrame {
 
         ftf_numTurno.setEditable(false);
         ftf_numTurno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        ftf_numTurno.setText("25");
         ftf_numTurno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ftf_numTurnoActionPerformed(evt);
@@ -136,12 +135,10 @@ public class Cancelar extends javax.swing.JFrame {
 
         ftf_fecha.setEditable(false);
         ftf_fecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-        ftf_fecha.setText("25/03/2019");
         getContentPane().add(ftf_fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 80, -1));
 
         ftf_hora.setEditable(false);
         ftf_hora.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
-        ftf_hora.setText("14:30");
         getContentPane().add(ftf_hora, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, 80, -1));
 
         bt_cancelarTurno.setBackground(new java.awt.Color(0, 0, 51));
@@ -193,6 +190,13 @@ public class Cancelar extends javax.swing.JFrame {
 
     private void bt_cancelarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cancelarTurnoActionPerformed
         // TODO add your handling code here:
+        DialogoOkCancel dlg = new DialogoOkCancel(this, true);
+        dlg.setVisible(true);
+        if(dlg.getReturnStatus()==1){
+            acciones.cancelarTurno(infoSesion);
+            vt_menu.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_bt_cancelarTurnoActionPerformed
 
     private void bt_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_volverActionPerformed
@@ -205,13 +209,7 @@ public class Cancelar extends javax.swing.JFrame {
 
     private void bt_cancelarTurnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_cancelarTurnoMouseClicked
         // TODO add your handling code here:
-        DialogoOkCancel dlg = new DialogoOkCancel(this, true);
-        dlg.setVisible(true);
-        if(dlg.getReturnStatus()==1){
-            MenuNuevo menu = new MenuNuevo();
-            menu.setVisible(true);
-            this.dispose();
-        }
+        
     }//GEN-LAST:event_bt_cancelarTurnoMouseClicked
 
     private void bt_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_volverMouseClicked
@@ -224,6 +222,7 @@ public class Cancelar extends javax.swing.JFrame {
         // TODO add your handling code here:
         acciones.mostrarMedicamentosRecetados(infoSesion, tbl_medicamentos);
         acciones.verDatosTurnoActual(infoSesion, ftf_numTurno, ftf_fecha, ftf_hora, datosTurno);
+        acciones.buscarTurnosCancelables(infoSesion, bt_cancelarTurno);
     }//GEN-LAST:event_formWindowOpened
 
     /**

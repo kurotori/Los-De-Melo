@@ -191,10 +191,6 @@ public class Reserva extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_volverMouseClicked
 
     private void bt_solTurnoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_solTurnoMouseClicked
-
-        
-        
-
     }//GEN-LAST:event_bt_solTurnoMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -214,6 +210,9 @@ public class Reserva extends javax.swing.JFrame {
                                                     jfF_horaTurno);
         if(opcion){
             acciones.reservarTurno(infoSesion);
+            acciones.buscarTurnosConfirmados(infoSesion, bt_solTurno);
+            menu.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_bt_solTurnoActionPerformed
 
