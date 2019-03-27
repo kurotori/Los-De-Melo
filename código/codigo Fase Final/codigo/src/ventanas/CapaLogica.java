@@ -107,7 +107,7 @@ public class CapaLogica {
        String email = vRegistro.getEmail();
        char[] contra1 = vRegistro.getContrasenia();
        char[] contra2 = vRegistro.getRepContra();
-       String contrasenia = herramientas.leerContrasenia(vRegistro.getCampoContraseña());
+       String contrasenia = herramientas.leerContrasenia(vRegistro.getCampoContrasenia());
        
        if( CI.length()<8 ){
            mostrarDialogoError("Debe proporcionar una CI válida", vRegistro);
@@ -275,6 +275,74 @@ public class CapaLogica {
    }
    
    public void registrarUsuario(Registro vt_registro){
-           if(herramientas.compararContrasenia(contra1, contra2)
+           if(herramientas.compararContrasenia(vt_registro.getContrasenia(),
+                                               vt_registro.getRepContra())){
+               boolean registroOk = true;
+               String mensaje="";
+               
+               if(vt_registro.getContrasenia().length<8){
+                   registroOk = false;
+                   mensaje = "La contraseña debe tener al menos 8 caracteres.";
+               }
+               if(vt_registro.getNombre().length()==0){
+                   registroOk = false;
+                   mensaje = "Debe proveer un nombre para el registro.";
+               }
+               if(vt_registro.getApellido().length()==0){
+                   registroOk = false;
+                   mensaje = "Debe proveer un apellido para el registro.";
+               }
+               if(vt_registro.getCI().length()==0){
+                   registroOk = false;
+                   mensaje = "Debe proveer un número de CI.";
+               }
+               if(vt_registro.getCI().length()<8){
+                   registroOk = false;
+                   mensaje = "Faltan dígitos en la CI escrita.";
+               }
+               if(vt_registro.getEmail().length()==0){
+                   registroOk = false;
+                   mensaje = "Debe proveer un Email";
+               }
+               if(vt_registro.getTelefono().length()==0){
+                   registroOk = false;
+                   mensaje="Debe proveer un Teléfono.";
+               }
+               if(registroOk){
+                   String contrasenia = herramientas.leerContrasenia(
+                           vt_registro.getCampoContrasenia());
+                   try{
+                       login.registrarUsuario(vt_registro.getCI(), 
+                                          vt_registro.getNombre(), 
+                                          vt_registro.getApellido(), 
+                                          vt_registro.getTelefono(), 
+                                          vt_registro.getEmail(), 
+                                          contrasenia);
+                       DialogoMensaje conf = 
+                               new DialogoMensaje(vt_registro, 
+                                                  true, 
+                                                  "Se registró correctamente al usuario "+
+                                                   vt_registro.getNombre()+" "+
+                                                   vt_registro.getApellido());
+                       conf.setVisible(true);
+                       vt_registro.volver();
+                   }
+                   catch(Exception ex){
+                       System.err.println("Error de registro: "+ex.getMessage());
+                   }
+                   
+               }
+               else{
+                   DialogoMensaje advertencia = new DialogoMensaje(vt_registro, true, 
+                                                           mensaje);
+                   advertencia.setVisible(true);
+               }
+               
+           }
+           else{
+               DialogoMensaje advertencia = new DialogoMensaje(vt_registro, true, 
+                                                           "Las contraseñas no son iguales");
+               advertencia.setVisible(true);
+           }
        }
 }

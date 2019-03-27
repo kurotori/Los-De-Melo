@@ -41,8 +41,13 @@ public class Registro extends javax.swing.JFrame {
         return pf_repContra.getPassword();
     }
     
-    public JPasswordField getCampoContraseña(){
+    public JPasswordField getCampoContrasenia(){
         return pf_contrasenia;
+    }
+    
+    public void volver(){
+        vAnterior.setVisible(true);
+        this.dispose();
     }
     
     @SuppressWarnings("unchecked")
@@ -244,8 +249,7 @@ public class Registro extends javax.swing.JFrame {
 
     private void bt_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_volverMouseClicked
         // TODO add your handling code here:
-        vAnterior.setVisible(true);
-        this.dispose();
+        volver();
     }//GEN-LAST:event_bt_volverMouseClicked
 
     private void bt_confirmarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_confirmarMouseClicked
@@ -254,7 +258,7 @@ public class Registro extends javax.swing.JFrame {
 
     private void bt_confirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_confirmarActionPerformed
         // TODO add your handling code here:
-        
+        acciones.registrarUsuario(this);
     }//GEN-LAST:event_bt_confirmarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

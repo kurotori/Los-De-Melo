@@ -3,17 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/ventanas/Sugerencias.java</file>
-            <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/ventanas/Reserva.java</file>
+            <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/losdemelo/misc/Herramientas.java</file>
             <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/ventanas/DatosSesion.java</file>
             <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/ventanas/CapaLogica.java</file>
+            <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/ventanas/Registro.java</file>
+            <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/losdemelo/basedatos/Modificar.java</file>
+            <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/ventanas/MenuNuevo.java</file>
+            <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/ventanas/DialogoOkCancel.java</file>
+            <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/ventanas/Reserva.java</file>
             <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/losdemelo/basedatos/Acceso.java</file>
             <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/losdemelo/basedatos/Leer.java</file>
             <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/ventanas/Principal.java</file>
             <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/ventanas/Login.java</file>
             <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/losdemelo/basedatos/Guardar.java</file>
             <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/ventanas/Cancelar.java</file>
-            <file>file:/C:/Users/Sebastian/Documents/GitHub/Los-De-Melo/código/codigo%20Fase%20Final/codigo/src/ventanas/MenuNuevo.java</file>
         </group>
     </open-files>
 </project-private>
