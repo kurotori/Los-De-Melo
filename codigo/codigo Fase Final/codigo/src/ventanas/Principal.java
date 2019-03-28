@@ -1,6 +1,7 @@
 package ventanas;
 
 import losdemelo.basedatos.Leer;
+import losdemelo.instalador.Instalador;
 
 /**
  * @author Victor Neves
@@ -10,11 +11,15 @@ public class Principal {
     
     public static void main(String[] args) throws Exception{
         //leer.BuscarTurnoDisponible();
+        if(args[0].equals("-instalar")){
+            Instalador instalador = new Instalador();
+            instalador.setVisible(true);
+        }
+        else{
+            DatosSesion datosSesion = new DatosSesion();
+            Login log= new Login(datosSesion);
+            log.setVisible(true);
+        }
         
-        DatosSesion datosSesion = new DatosSesion();
-        
-        Login log= new Login(datosSesion);
-        
-        log.setVisible(true);
     }
 }

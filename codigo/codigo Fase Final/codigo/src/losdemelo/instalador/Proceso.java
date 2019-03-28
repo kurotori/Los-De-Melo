@@ -16,6 +16,7 @@
  */
 package losdemelo.instalador;
 
+import java.awt.Color;
 import java.io.File;
 
 /**
@@ -27,17 +28,33 @@ public class Proceso extends javax.swing.JFrame {
     static String servidor;
     static String usuario;
     static String contrasenia;
+    static Instalador vt_instalador;
+    static String modo;
+    
 
     /**
      * Creates new form Proceso
+     * @param servidor
+     * @param usuario
+     * @param contrasenia
+     * @param vt_inst
      */
-    public Proceso(String servidor, String usuario, String contrasenia) {
+    public Proceso(String servidor, String usuario, String contrasenia, Instalador vt_inst,
+                    String modo) {
         initComponents();
-        this.servidor = servidor;
-        this.usuario = usuario;
-        this.contrasenia = contrasenia;
+        this.setLocationRelativeTo(null);
+        Proceso.servidor = servidor;
+        Proceso.usuario = usuario;
+        Proceso.contrasenia = contrasenia;
+        Proceso.vt_instalador = vt_inst;
+        Proceso.modo = modo;
         
-        
+        bt_aceptar.setBackground(Color.BLUE);
+        bt_volver.setBackground(Color.red);
+        bt_aceptar.setEnabled(false);
+        bt_volver.setEnabled(false);
+        jta_areaTexto.setText("Espere un momento por favor...");
+        operaciones.agregarTexto(jta_areaTexto, "Comenzando el proceso...");
     }
 
     /**
@@ -49,6 +66,8 @@ public class Proceso extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bt_aceptar = new javax.swing.JButton();
+        bt_volver = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jta_areaTexto = new javax.swing.JTextArea();
 
@@ -56,6 +75,24 @@ public class Proceso extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
+            }
+        });
+
+        bt_aceptar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        bt_aceptar.setForeground(new java.awt.Color(255, 255, 255));
+        bt_aceptar.setText("Aceptar");
+        bt_aceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_aceptarActionPerformed(evt);
+            }
+        });
+
+        bt_volver.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        bt_volver.setForeground(new java.awt.Color(255, 255, 255));
+        bt_volver.setText("Volver");
+        bt_volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_volverActionPerformed(evt);
             }
         });
 
@@ -71,15 +108,24 @@ public class Proceso extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(bt_volver)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bt_aceptar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bt_aceptar)
+                    .addComponent(bt_volver))
+                .addContainerGap())
         );
 
         pack();
@@ -87,15 +133,76 @@ public class Proceso extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        operaciones.agregarTexto(jta_areaTexto, "Creando archivo ini...");
-        File archivoIni = operaciones.crearArchivoIni();
-        operaciones.agregarTexto(jta_areaTexto, "Listo");
-        
-        operaciones.agregarTexto(jta_areaTexto, "Registrando datos del servidor...");
-        operaciones.escribirEnIni(archivoIni, "mysql", "servidor", servidor);
-        operaciones.agregarTexto(jta_areaTexto, "Listo");
-        
+        if(modo.equals("desinstalar")){
+            operaciones.agregarTexto(jta_areaTexto, "Desinstalando...");
+            operaciones.borrarBaseDeDatos(servidor, usuario, contrasenia, jta_areaTexto);
+            bt_aceptar.setEnabled(true);
+            bt_volver.setEnabled(true);
+        }
+        else{
+            operaciones.agregarTexto(jta_areaTexto, "Creando archivo ini...");
+            File archivoIni = operaciones.crearArchivoIni();
+            operaciones.agregarTexto(jta_areaTexto, "Listo");
+
+            operaciones.agregarTexto(jta_areaTexto, "Comprobando credenciales...");
+            String comp = operaciones.comprobarServidor(servidor, usuario, contrasenia);
+            if(comp.equals("OK")){
+                operaciones.agregarTexto(jta_areaTexto, comp);
+
+                operaciones.agregarTexto(jta_areaTexto, "Registrando datos del servidor...");
+                operaciones.escribirEnIni(archivoIni, "mysql", "servidor", servidor);
+                operaciones.agregarTexto(jta_areaTexto, "Listo");
+
+                operaciones.agregarTexto(jta_areaTexto, "Creando Base de Datos...");
+                operaciones.crearBaseDeDatos(servidor, usuario, contrasenia);
+                operaciones.agregarTexto(jta_areaTexto, "Listo");
+                
+                operaciones.agregarTexto(jta_areaTexto, "Creando el usuario...");
+                operaciones.crearUsuario(servidor, usuario, contrasenia);
+                operaciones.agregarTexto(jta_areaTexto, "Listo");
+
+                operaciones.crearTablas(servidor, usuario, contrasenia, jta_areaTexto);
+
+                operaciones.insertarDatos(servidor, usuario, contrasenia, jta_areaTexto);
+
+                operaciones.generarIndices(servidor, usuario, contrasenia, jta_areaTexto);
+
+                jta_areaTexto.setText("La instalación se realizó con éxito");
+                operaciones.agregarTexto(jta_areaTexto, 
+                        "Ahora puede acceder al sistema ejecutando systurno.bat, ubicado"
+                                + "en el mismo directorio que este instalador");
+                operaciones.agregarTexto(jta_areaTexto, ""
+                        + "El usuario de pruebas tiene las siguientes credenciales:");
+                operaciones.agregarTexto(jta_areaTexto, "CI: 12345678");
+                operaciones.agregarTexto(jta_areaTexto, "Contraseña: 12345678");
+                operaciones.agregarTexto(jta_areaTexto, "-------------------------------");
+                operaciones.agregarTexto(jta_areaTexto, "Muchas Gracias por probar SysTurno.");
+                operaciones.agregarTexto(jta_areaTexto, "Equipo de Desarrollo LosDeMelo");
+                bt_aceptar.setEnabled(true);
+            }
+            else{
+                operaciones.agregarTexto(jta_areaTexto, "ERROR:");
+                operaciones.agregarTexto(jta_areaTexto, 
+                        "No se pudo establecer conexión con el servidor, revise las"
+                      + " credenciales ingresadas");
+                operaciones.agregarTexto(jta_areaTexto,"Detalle del error: \n"+ comp);
+                bt_volver.setEnabled(true);
+            }
+        }
     }//GEN-LAST:event_formWindowOpened
+
+    private void bt_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_volverActionPerformed
+        // TODO add your handling code here:
+        vt_instalador.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_bt_volverActionPerformed
+
+    private void bt_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_aceptarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        System.exit(0);
+    }//GEN-LAST:event_bt_aceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,12 +234,14 @@ public class Proceso extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Proceso(servidor,usuario,contrasenia).setVisible(true);
+                new Proceso(servidor,usuario,contrasenia,vt_instalador,modo).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bt_aceptar;
+    private javax.swing.JButton bt_volver;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jta_areaTexto;
     // End of variables declaration//GEN-END:variables

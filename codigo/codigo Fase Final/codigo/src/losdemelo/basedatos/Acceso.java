@@ -6,7 +6,8 @@
 package losdemelo.basedatos;
 
 import java.sql.*;
-
+import java.io.File;
+import org.ini4j.*;
 
 /**
  * Contiene métodos para facilitar la creación y el chequeo de una conexión a la 
@@ -28,6 +29,17 @@ public class Acceso {
      * Permite obtener el nombre de usuario para acceder a la base de datos
      * @return un String con el nombre de usuario
      */
+    public Acceso(){
+        String URLArchivo="systurno.ini";
+        try{
+            Wini ini = new Wini(new File(URLArchivo));
+            String servidorIni =  ini.get("mysql","servidor");
+            servidor = "jdbc:mysql://"+servidorIni;
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+    }
     public String getUsuario() {
         return usuario;
     }
