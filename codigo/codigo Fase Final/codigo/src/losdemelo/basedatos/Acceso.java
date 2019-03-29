@@ -35,6 +35,7 @@ public class Acceso {
             Wini ini = new Wini(new File(URLArchivo));
             String servidorIni =  ini.get("mysql","servidor");
             servidor = "jdbc:mysql://"+servidorIni;
+            System.out.println(servidor);
         }
         catch(Exception e){
             System.err.println(e.getMessage());

@@ -11,10 +11,13 @@ public class Principal {
     
     public static void main(String[] args) throws Exception{
         //leer.BuscarTurnoDisponible();
-        if(args[0].equals("-instalar")){
+        if(args.length>0){
+            if(args[0].equals("-instalar")){
             Instalador instalador = new Instalador();
             instalador.setVisible(true);
+            }
         }
+        
         else{
             DatosSesion datosSesion = new DatosSesion();
             Login log= new Login(datosSesion);
