@@ -70,7 +70,7 @@ public final class MenuNuevo extends javax.swing.JFrame {
         cont3.add(menu3);
         //------------------------------------------------------------------------------------------------------------------------
 
-        lbl_IdSesion.setText("Sesión:"+infoSesion.getIdSesion());
+        //lbl_IdSesion.setText("Sesión:"+infoSesion.getIdSesion());
         //setExitButton();
     }
     
@@ -243,7 +243,7 @@ public final class MenuNuevo extends javax.swing.JFrame {
                 }
                 
                 if(item.getName().equals("submenu5.1")){
-                  Sugerencias sugerencias = new Sugerencias();
+                  Sugerencias sugerencias = new Sugerencias(vt_menu,infoSesion);
                   sugerencias.setVisible(true);
                   vt_menu.setVisible(false);
                 }
@@ -267,7 +267,6 @@ public final class MenuNuevo extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         cont3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        lbl_IdSesion = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -292,8 +291,6 @@ public final class MenuNuevo extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(153, 153, 153));
         jLabel2.setText("- Los De Melo -");
 
-        lbl_IdSesion.setText("jLabel3");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -301,9 +298,7 @@ public final class MenuNuevo extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(cont3, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_IdSesion))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 377, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -312,8 +307,7 @@ public final class MenuNuevo extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(133, 133, 133)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbl_IdSesion))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 13, 788, 405));
@@ -347,6 +341,5 @@ public final class MenuNuevo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lbl_IdSesion;
     // End of variables declaration//GEN-END:variables
 }

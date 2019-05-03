@@ -1,0 +1,9 @@
+Systurno - Versión beta
+-------------------------------
+Notas sobre la versión:
+* Esta versión esta pensada para ejecutarse en un entorno MS Windows con Java, no se ha probado en GNU/Linux con Wine.
+* Para utilizar esta aplicación se requiere una base de datos MySQL/MariaDB y sus credenciales administrativas (USUARIO y CONTRASEÑA,
+el instalador NO FUNCIONA en un servidor con root o usario administrativo sin contraseña).
+* Previo al uso de la aplicación se deberá ejecutar el archivo instalar.bat para que se genere la base de datos correspondiente y un
+usuario dedicado en dicho servidor.
+* El mismo método permite la eliminación de la base de datos y los usuarios creados.

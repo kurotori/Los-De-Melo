@@ -12,13 +12,18 @@ import ventanas.MenuNuevo;
  * @author Victor Neves
  */
 public class Sugerencias extends javax.swing.JFrame {
+    DatosSesion infoSesion;
+    MenuNuevo menu;
 
     /**
      * Creates new form Terms
      */
-    public Sugerencias() {
+    public Sugerencias(MenuNuevo menu, DatosSesion sesion) {
         initComponents();
         this.setLocationRelativeTo(null);
+        
+        this.menu = menu;
+        this.infoSesion = sesion;
     }
 
     /**
@@ -131,7 +136,7 @@ public class Sugerencias extends javax.swing.JFrame {
 
     private void jButtonVolver1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonVolver1MouseClicked
         // TODO add your handling code here:
-        MenuNuevo menu= new MenuNuevo();
+        
         menu.setVisible(true);
         this.dispose();
         

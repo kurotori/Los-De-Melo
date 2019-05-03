@@ -145,6 +145,10 @@ public class CapaLogica {
        String CI = infoSesion.getCI();
        DefaultTableModel datos = leer.listaMedicamentosRecetados(base, CI, false);
        tabla.setModel(datos);
+       tabla.getTableHeader().setReorderingAllowed(false);
+       tabla.getTableHeader().setResizingAllowed(false);
+       tabla.setCellEditor(null);
+       tabla.setEnabled(false);
    }
    
    public boolean seleccionarMedicamentosDisponibles(Reserva ventana,
@@ -243,6 +247,11 @@ public class CapaLogica {
        tf_nombre.setText(infoSesion.getNombreUsuario());
        DefaultTableModel datos = leer.historialTurnos(base, CI);
        tabla.setModel(datos);
+       tabla.getTableHeader().setReorderingAllowed(false);
+       tabla.getTableHeader().setResizingAllowed(false);
+       tabla.setCellEditor(null);
+       tabla.setEnabled(false);
+       
    }
    
    public void verDatosTurnoActual(DatosSesion sesion,
